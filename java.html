@@ -170,25 +170,84 @@
                                                             </div>
                                                             <div class="content_list" style="margin-top:10px;" data-v-0e455182="">
                                                                 <ul class="list_top" style="font-size:14px;" data-v-0e455182="">
-                                                                    <li style="color:#3978a3;" data-v-0e455182="">2021-02 ~ 2021-03</li>
-                                                                    <li class="name" style="color:#3978a3;" data-v-0e455182=""><b data-v-0e455182="">海米会员中心</b></li>
-                                                                    <li style="color:#3978a3;" data-v-0e455182="">WEB开发工程师</li>
+                                                                    <li style="color:#3978a3;" data-v-0e455182="">2017-01 ~ 至今</li>
+                                                                    <li class="name" style="color:#3978a3;" data-v-0e455182=""><b data-v-0e455182="">海米商城</b></li>
+                                                                    <li style="color:#3978a3;" data-v-0e455182=""></li>
                                                                 </ul>
                                                                 <div class="ql-editor" style="font-size:13px;line-height:1.7;" data-v-0e455182="">
                                                                     <p><strong>项目描述：</strong></p>
-                                                                    <p> 海米会员中心是一个小程序开发的积分商城，主要有购物模块、积分兑换、积分大转盘、会员抽奖、积分秒杀、社区等功能模块， 后台新增功能模块：所见即所得页面开发、门店管理、活动海报编辑等
+                                                                    <p>海米商城是海俪恩针对眼镜门店店员会员制的一套会员商城系统，已开发上线IOS端，安卓端，小程序端，公众号H5版本</p>
+                                                                    <p> 主要有购物模块、订单模块、现金红包、积分兑换、积分抽奖、积分赢福、助力淘、积分秒杀、许愿池、会员社区、门店活动、会员抽奖、活动海报、所见即所得等功能模块
                                                                     </p>
-                                                                    <p><strong>负责任务：</strong></p>
-                                                                    <ul>
-                                                                        <li>小程序端开发</li>
-                                                                    </ul>
                                                                     <p><strong>使用技术：</strong></p>
                                                                     <ul>
-                                                                        <li>使用uniapp开发小程序</li>
+                                                                        <li>服务端：Spring + springMVC + mybatis + redis</li>
+                                                                        <li>小程序：uniapp</li>
+                                                                        <li>H5: Vue + mint-ui</li>
+                                                                        <li>接口规范：使用restful规范，采用token鉴权方式</li>
+                                                                    </ul>
+                                                                    <p><strong>服务器架构：</strong></p>
+                                                                    <ul>
+                                                                        <li>负载均衡拖两台后端服务器serverA、serverB</li>
+                                                                        <li>serverA、serverB 各部署4个tomcat节点，通过nginx反向代理（通过ip_hash策略访问节点）</li>
+                                                                        <li>一台服务器部署管理后台和任务服务</li>
+                                                                        <li>服务间通信使用redis的订阅发布</li>
+                                                                    </ul>
+                                                                    <p><strong>技术描述：</strong></p>
+                                                                    <ul>
+                                                                        <li>
+                                                                            <span>积分抽奖：</span>
+                                                                            <ul>
+                                                                                <li>一个通过大转盘抽奖方式的类秒杀功能，会员在指定时间开始抽奖，先到先得</li>
+                                                                                <li>
+                                                                                    技术实现：
+                                                                                    <br />1、编辑完活动及奖项后，把奖品随机打乱后rpush入redis队列（如：奖品A有3个，奖品B有2个，可能的队列是：ABAAB或BAABA）,
+                                                                                    <br /> 2、抽奖时，通过redis中的活动缓存判断活动是否开始或结束
+                                                                                    <br /> 3、若在抽奖中，从redis中pop出一个奖品，组装中奖信息及订单信息后加入待同步队列，并publish同步消息，若奖品pop出来为空，则结束当前抽奖
+                                                                                    <br /> 4、任务服务节点订阅收到同步事件后，唤起同步操作
+                                                                                    <br /> 5、同步操作：通过redis的setnx命名获取操作锁，开辟线程池, pop待同步队列中的数据,进行同步事务操作，如catch到异常，则lpush到失败队列，等到当前待同步队列同步完后释放操作锁
+                                                                                </li>
+                                                                            </ul>
+                                                                        </li>
                                                                     </ul>
                                                                     <p> </p>
                                                                 </div>
                                                             </div>
+
+                                                            <div class="content_list" style="margin-top:10px;" data-v-0e455182="">
+                                                                <ul class="list_top" style="font-size:14px;" data-v-0e455182="">
+                                                                    <li style="color:#3978a3;" data-v-0e455182="">2019-07 ~ 2020-11</li>
+                                                                    <li class="name" style="color:#3978a3;" data-v-0e455182=""><b data-v-0e455182="">知权易（知法骆驼）</b></li>
+                                                                    <li style="color:#3978a3;" data-v-0e455182=""></li>
+                                                                </ul>
+                                                                <div class="ql-editor" style="font-size:13px;line-height:1.7;" data-v-0e455182="">
+                                                                    <p><strong>项目描述：</strong></p>
+                                                                    <p>知权易是一个公众号文章侵权检测平台</p>
+                                                                    <ul>
+                                                                        <li>1、通过某些手段爬取当前授权公众号的所有文章</li>
+                                                                        <li>2、使用搜狗微信搜索引擎根据原创文章拆分的句子进行搜索并对结果和原文进行对比（需要使用代理ip来处理反爬检测）</li>
+                                                                        <li>3、使用selenium的getScreenshotAs截图企业营业执照的公示信息</li>
+                                                                        <li>4、利用fiddler抓包对侵权链接进行转换处理及公众号主体信息截图处理</li>
+                                                                    </ul>
+
+                                                                    <p><strong>使用技术：</strong></p>
+                                                                    <ul>
+                                                                        <li>Spring + springMVC + mybatis + redis + StringBoot</li>
+                                                                    </ul>
+                                                                    <p><strong>实现功能：</strong></p>
+                                                                    <ul>
+                                                                        <li>OA系统开发</li>
+                                                                        <li>公众号原创文章爬取</li>
+                                                                        <li>原创文章被侵权检测</li>
+                                                                        <li>存证维权管理</li>
+                                                                        <li>浏览器插件开发(同步公众号白名单)</li>
+                                                                    </ul>
+
+
+                                                                </div>
+                                                            </div>
+
+
                                                             <div class="content_list" style="margin-top:10px;" data-v-0e455182="">
                                                                 <ul class="list_top" style="font-size:14px;" data-v-0e455182="">
                                                                     <li style="color:#3978a3;" data-v-0e455182="">2020-08 ~ 2020-09</li>
@@ -212,27 +271,7 @@
                                                                     <p> </p>
                                                                 </div>
                                                             </div>
-                                                            <div class="content_list" style="margin-top:10px;" data-v-0e455182="">
-                                                                <ul class="list_top" style="font-size:14px;" data-v-0e455182="">
-                                                                    <li style="color:#3978a3;" data-v-0e455182="">2019-07 ~ 2020-11</li>
-                                                                    <li class="name" style="color:#3978a3;" data-v-0e455182=""><b data-v-0e455182="">知法骆驼</b></li>
-                                                                    <li style="color:#3978a3;" data-v-0e455182="">软件开发工程师</li>
-                                                                </ul>
-                                                                <div class="ql-editor" style="font-size:13px;line-height:1.7;" data-v-0e455182="">
-                                                                    <p><strong>项目描述：</strong></p>
-                                                                    <p> 知法骆驼是一个文章侵权检测平台，爬取原创公众号原创文章，对每篇原创文章进行侵权检测、存证、立案、证据下载等。</p>
-                                                                    <p><strong>负责任务：</strong></p>
-                                                                    <ul>
-                                                                        <li>OA系统开发</li>
-                                                                        <li>公众号原创文章爬取</li>
-                                                                        <li>原创文章被侵权检测</li>
-                                                                        <li>存证维权管理</li>
-                                                                        <li>浏览器插件开发(同步公众号白名单)</li>
-                                                                    </ul>
-                                                                    <p><strong>使用技术：</strong></p>
-                                                                    <p> 后台采用<strong>SSM</strong>、数据库使用<strong>Mysql</strong>、<strong>Redis</strong>、检测服务使用<strong>Springboot</strong>开发、链接转换和相关截图使用<strong>Python</strong></p>
-                                                                </div>
-                                                            </div>
+
                                                             <div class="content_list" style="margin-top:10px;" data-v-0e455182="">
                                                                 <ul class="list_top" style="font-size:14px;" data-v-0e455182="">
                                                                     <li style="color:#3978a3;" data-v-0e455182="">2019-03 ~ 2019-04</li>
@@ -268,29 +307,7 @@
                                                                     <p> </p>
                                                                 </div>
                                                             </div>
-                                                            <div class="content_list" style="margin-top:10px;" data-v-0e455182="">
-                                                                <ul class="list_top" style="font-size:14px;" data-v-0e455182="">
-                                                                    <li style="color:#3978a3;" data-v-0e455182="">2017-01 ~ 2018-10</li>
-                                                                    <li class="name" style="color:#3978a3;" data-v-0e455182=""><b data-v-0e455182="">海米商城</b></li>
-                                                                    <li style="color:#3978a3;" data-v-0e455182="">后端开发工程师</li>
-                                                                </ul>
-                                                                <div class="ql-editor" style="font-size:13px;line-height:1.7;" data-v-0e455182="">
-                                                                    <p><strong>项目描述：</strong></p>
-                                                                    <p> 海俪恩积分商城，主要有现金红包、积分兑换、积分抽奖（高并发）、8分赢福、助力淘、积分秒杀、众筹、许愿池</p>
-                                                                    <p><strong>负责任务：</strong></p>
-                                                                    <ul>
-                                                                        <li>指导团队成员开发项目</li>
-                                                                        <li>负责后期维护和迭代</li>
-                                                                    </ul>
-                                                                    <p><strong>使用技术：</strong></p>
-                                                                    <ul>
-                                                                        <li>服务端使用<strong>SSM</strong>、数据库使用<strong>Mysql </strong>缓存使用<strong>Redis</strong></li>
-                                                                        <li>混合开发使用<strong>Vue</strong></li>
-                                                                    </ul>
-                                                                    <p><br /></p>
-                                                                    <p><br /></p>
-                                                                </div>
-                                                            </div>
+
                                                             <div class="content_list" style="margin-top:10px;" data-v-0e455182="">
                                                                 <ul class="list_top" style="font-size:14px;" data-v-0e455182="">
                                                                     <li style="color:#3978a3;" data-v-0e455182="">2018-06 ~ 2018-06</li>
@@ -521,24 +538,41 @@
                                                                     <p> 闽南网官网开发和论坛开发</p>
                                                                 </div>
                                                             </div>
+
+
                                                         </div>
                                                     </div>
-                                                    <!---->
-                                                    <!---->
+                                                    <div id="jineng" class="resume_content" data-v-0e455182="">
+                                                        <div class="resume_content_main" style="padding-top:15px;padding-bottom:18px;" data-v-0e455182="">
+                                                            <div class="module_tit" data-v-0e455182="">
+                                                                <span data-v-0e455182="">其他</span>
+                                                                <div class="qmfont qmicon-zhengzhi" style="background-color:#3978a3;" data-v-0e455182=""></div>
+                                                            </div>
+                                                            <div class="content_list" style="margin-top:10px;" data-v-0e455182="">
+                                                                <ul class="list_top" style="font-size:14px;" data-v-0e455182="">
+                                                                    <li class="name" style="color:#3978a3;" data-v-0e455182=""><b data-v-0e455182="">自建maven私服</b></li>
+                                                                </ul>
+                                                                <div class="ql-editor" style="font-size:13px;line-height:1.7;" data-v-0e455182="">
+                                                                    http://maven.xmappservice.com/
+                                                                </div>
+
+                                                            </div>
+                                                        </div>
+                                                    </div>
+
                                                     <div id="jineng" class="resume_content" data-v-0e455182="">
                                                         <div class="resume_content_main" style="padding-top:15px;padding-bottom:18px;" data-v-0e455182="">
                                                             <div class="module_tit" data-v-0e455182="">
                                                                 <span data-v-0e455182="">技能特长</span>
                                                                 <div class="qmfont qmicon-shezhi" style="background-color:#3978a3;" data-v-0e455182=""></div>
                                                             </div>
-                                                            <!---->
+
                                                             <ul class="jineng_list" data-v-0e455182="">
                                                                 <li class="is_text" style="margin:10px 0;" data-v-0e455182="">
                                                                     <div role="progressbar" aria-valuenow="80" aria-valuemin="0" aria-valuemax="100" class="el-progress jineng_progress el-progress--line" data-v-0e455182="">
                                                                         <div class="el-progress-bar">
                                                                             <div class="el-progress-bar__outer" style="height:6px;">
                                                                                 <div class="el-progress-bar__inner" style="width:80%;background-color:#3978a3;">
-                                                                                    <!---->
                                                                                 </div>
                                                                             </div>
                                                                         </div>
@@ -575,41 +609,11 @@
                                                                         </div>
                                                                     </div>
                                                                     <p style="font-size:13px;" data-v-0e455182="">Css</p><span class="shuliandu" style="font-size:12px;" data-v-0e455182="">熟练</span></li>
-                                                                <li class="is_text" style="margin:10px 0;" data-v-0e455182="">
-                                                                    <div role="progressbar" aria-valuenow="65" aria-valuemin="0" aria-valuemax="100" class="el-progress jineng_progress el-progress--line" data-v-0e455182="">
-                                                                        <div class="el-progress-bar">
-                                                                            <div class="el-progress-bar__outer" style="height:6px;">
-                                                                                <div class="el-progress-bar__inner" style="width:65%;background-color:#3978a3;">
-                                                                                    <!---->
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="el-progress__text" style="font-size:14.4px;">
-                                                                            65%
-                                                                        </div>
-                                                                    </div>
-                                                                    <p style="font-size:13px;" data-v-0e455182="">PHP</p><span class="shuliandu" style="font-size:12px;" data-v-0e455182="">良好</span></li>
-                                                                <li class="is_text" style="margin:10px 0;" data-v-0e455182="">
-                                                                    <div role="progressbar" aria-valuenow="50" aria-valuemin="0" aria-valuemax="100" class="el-progress jineng_progress el-progress--line" data-v-0e455182="">
-                                                                        <div class="el-progress-bar">
-                                                                            <div class="el-progress-bar__outer" style="height:6px;">
-                                                                                <div class="el-progress-bar__inner" style="width:50%;background-color:#3978a3;">
-                                                                                    <!---->
-                                                                                </div>
-                                                                            </div>
-                                                                        </div>
-                                                                        <div class="el-progress__text" style="font-size:14.4px;">
-                                                                            50%
-                                                                        </div>
-                                                                    </div>
-                                                                    <p style="font-size:13px;" data-v-0e455182="">Python</p><span class="shuliandu" style="font-size:12px;" data-v-0e455182="">一般</span></li>
+
                                                             </ul>
                                                         </div>
                                                     </div>
-                                                    <!---->
-                                                    <!---->
-                                                    <!---->
-                                                    <!---->
+
                                                 </div>
                                             </div>
                                         </div>
